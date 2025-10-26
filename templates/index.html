@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تصنيف تتت المعالم</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f0e1; /* بيج فاتح */
+            text-align: center;
+            padding: 50px;
+        }
+        h1 { color: #8b5e3c; }
+        form { background: #fff3e6; padding: 20px; border-radius: 15px; display: inline-block; }
+        button { background: #a67c52; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; }
+        button:hover { background: #8b5e3c; }
+        .result { margin-top: 20px; padding: 20px; background: #fff3e6; border-radius: 15px; display: inline-block; }
+        img { max-width: 400px; border-radius: 15px; border: 2px solid #a67c52; }
+    </style>
+</head>
+<body>
+    <h1>رفع صورة اااrmdir /s /q __pycache__ للتعرف على المعلم</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required><br><br>
+        <button type="submit">رفع الصورة</button>
+    </form>
+
+    {% if img_path %}
+    <div class="result">
+        <img src="{{ img_path }}" alt="Uploaded Image"><br>
+        <p>{{ info }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
