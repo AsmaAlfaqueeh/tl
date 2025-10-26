@@ -1,35 +1,228 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <title>روبوتك السياحي</title>
+    <!-- Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-vpYfPf8fZzvDq+q5d0O+K2q7LP4q5YnZmZ4sF1R9Vj3RQQ9ZK1K5I/0LzOjIYlYvM1Tq6f9U4r2/HC1pQJ+FsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f0e1; 
-            text-align: center;
-            padding: 50px;
+        /* حركات الخلفية المتدرجة */
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
         }
-        h1 { color: #8b5e3c; }
-        form { background: #fff3e6; padding: 20px; border-radius: 15px; display: inline-block; }
-        button { background: #a67c52; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; }
-        button:hover { background: #8b5e3c; }
-        .result { margin-top: 20px; padding: 20px; background: #fff3e6; border-radius: 15px; display: inline-block; }
-        img { max-width: 400px; border-radius: 15px; border: 2px solid #a67c52; }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: right;
+            color: #4b3621;
+            background: linear-gradient(-45deg, #f5f0e1, #fff8f0, #f0e5d8, #fff3e6);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* رسومات خلفية ناعمة */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.15) 10%, transparent 11%),
+                radial-gradient(circle, rgba(200,180,160,0.1) 10%, transparent 11%);
+            background-size: 100px 100px;
+            animation: moveShapes 60s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes moveShapes {
+            0% {transform: translate(0,0);}
+            50% {transform: translate(-50px,50px);}
+            100% {transform: translate(0,0);}
+        }
+
+        header {
+            background-color: #8b5e3c;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            color: #a67c52;
+            margin-top: 40px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* النموذج */
+        .upload-section {
+            background: rgba(255, 243, 230, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .upload-section:hover {
+            transform: scale(1.02);
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #a67c52;
+        }
+
+        button {
+            background: #a67c52;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            box-shadow: 0 0 10px rgba(166,124,82,0.6);
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #8b5e3c;
+            box-shadow: 0 0 20px rgba(139,94,60,0.8);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 243, 230, 0.9);
+            border-radius: 15px;
+            display: inline-block;
+        }
+        .result img {
+            max-width: 500px;
+            border-radius: 15px;
+            border: 2px solid #a67c52;
+            margin-bottom: 15px;
+        }
+
+        /* الأيقونات التعليمية */
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+        .step {
+            background: rgba(255, 243, 230, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            width: 250px;
+            margin: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .step i {
+            font-size: 3em;
+            color: #a67c52;
+            margin-bottom: 15px;
+            text-shadow: 0 0 12px rgba(166,124,82,0.7);
+        }
+        .step h3 {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            background-color: #8b5e3c;
+            color: white;
+            text-align: center;
+            font-size: 0.9em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
-    <h1>رفع صورة للتعرف على المعلم</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" required><br><br>
-        <button type="submit">رفع الصورة</button>
-    </form>
 
-    {% if img_path %}
-    <div class="result">
-        <img src="{{ img_path }}" alt="Uploaded Image"><br>
-        <p>{{ info }}</p>
-    </div>
-    {% endif %}
+<header>روبوتك السياحي</header>
+
+<main>
+    <section class="about">
+        <h2>نبذة عن اليمن</h2>
+        <p>اليمن بلد غني بالثقافة والتاريخ، يمتاز بالعمارة القديمة والأسواق التقليدية والمواقع الطبيعية الخلابة. من صنعاء القديمة إلى شبام حضرموت، كل زاوية تحكي قصة تاريخية فريدة.</p>
+        <h2>السياحة في اليمن</h2>
+        <p>تعرف على المعالم التاريخية، الجبال، السواحل، والصحاري. تعد اليمن من أكثر الدول تنوعاً من حيث الطبيعة والتاريخ، وتوفر تجربة سياحية ممتعة لكل زائر.</p>
+    </section>
+
+    <section class="upload-section">
+        <h2>رفع صورة للتعرف على المعلم</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required><br>
+            <button type="submit">رفع الصورة</button>
+        </form>
+
+        {% if img_path %}
+        <div class="result">
+            <img src="{{ img_path }}" alt="Uploaded Image"><br>
+            <p>{{ info }}</p>
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="steps">
+        <div class="step">
+            <i class="fas fa-upload"></i>
+            <h3>رفع الصورة</h3>
+            <p>اضغط على زر "رفع الصورة" لاختيار صورة من جهازك.</p>
+        </div>
+        <div class="step">
+            <i class="fas fa-magnifying-glass"></i>
+            <h3>التعرف على المعلم</h3>
+            <p>يقوم النظام بتحليل الصورة والتعرف على المعلم التاريخي أو السياحي.</p>
+        </div>
+        <div class="step">
+            <i class="fas fa-download"></i>
+            <h3>تحميل النتائج</h3>
+            <p>يمكنك حفظ المعلومات أو الصورة على جهازك بسهولة.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    &copy; 2025 Asma Alfaqueeh أسماء الفقية | جميع الحقوق محفوظة
+</footer>
+
 </body>
 </html>
